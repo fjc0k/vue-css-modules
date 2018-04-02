@@ -11,7 +11,8 @@ export default {
 
   data() {
     return {
-      disabled: false
+      disabled: false,
+      type: 'danger'
     }
   },
 
@@ -23,9 +24,12 @@ export default {
 
   render(h) {
     return h('div', {
-      styleName: ['@button :disabled mini=isMini'],
+      styleName: ['@button $type :disabled mini=isMini'],
       on: {
-        click: () => this.disabled = !this.disabled
+        click: () => {
+          this.disabled = !this.disabled
+          this.type = 'primarydanger'.replace(this.type, '')
+        }
       }
     }, 'BUTTON')
   }

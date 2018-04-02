@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v0.3.1
+ * vue-css-modules v0.4.1
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
@@ -28,45 +28,65 @@
   function isFunction(value) {
     return typeof value === 'function';
   }
+  var camelCaseCache = Object.create(null);
+  function camelCase(value) {
+    if (camelCaseCache[value]) return camelCaseCache[value];
+    var result = '';
+    var shouldUpperCase = false;
+
+    for (var i = 0, len = value.length; i < len; i++) {
+      var char = value[i];
+
+      if (char === '-') {
+        shouldUpperCase = true;
+      } else {
+        result += result && shouldUpperCase ? char.toUpperCase() : char;
+        shouldUpperCase = false;
+      }
+    }
+
+    camelCaseCache[value] = result;
+    return result;
+  }
 
   var cache = Object.create(null);
   var parseClassExpression = (function (expression) {
     if (cache[expression]) return cache[expression];
-    var modifier;
     var className;
     var binding;
+    var bindingValue;
     var role;
 
     if (includes(expression, '=', 1)) {
       // eg: disabled=isDisabled
-      modifier = '=';
-
       var _expression$split = expression.split('=');
 
       className = _expression$split[0];
       binding = _expression$split[1];
     } else {
-      var _modifier = expression[0];
+      var modifier = expression[0];
 
-      if (_modifier === '@') {
+      if (modifier === '$') {
+        // eg: $type
+        binding = expression.substr(1);
+        bindingValue = true;
+      } else if (modifier === '@') {
         // eg: @button
-        modifier = _modifier;
         className = expression.substr(1);
         role = className;
-      } else if (_modifier === ':') {
+      } else if (modifier === ':') {
         // eg: :disabled
-        modifier = _modifier;
         className = expression.substr(1);
-        binding = className;
+        binding = camelCase(className);
       } else {
         className = expression;
       }
     }
 
     cache[expression] = {
-      modifier: modifier,
       className: className,
       binding: binding,
+      bindingValue: bindingValue,
       role: role
     };
     return cache[expression];
@@ -75,6 +95,7 @@
   var INJECTED = '__CSSModules__';
   var INJECT_ATTR = 'styleName';
 
+  /* eslint max-depth: 0 guard-for-in: 0 */
   function createElement(_) {
     var args = [].slice.call(arguments, 1); // for functional component
 
@@ -105,24 +126,39 @@
       var modules = data[INJECT_ATTR] || data.attrs[INJECT_ATTR] || '';
 
       if (modules.length) {
-        (Array.isArray(modules) ? modules : [modules]).forEach(function (module) {
-          if (!module || typeof module !== 'string') return;
-          module.split(/\s+/g).forEach(function (classExpression) {
-            var _parseClassExpression = parseClassExpression(classExpression),
-                className = _parseClassExpression.className,
-                binding = _parseClassExpression.binding,
-                role = _parseClassExpression.role;
+        var _modules = Array.isArray(modules) ? modules : [modules];
 
-            if ((binding ? context[binding] : true) && styles[className]) {
-              data.staticClass += " " + styles[className];
-              data.staticClass = data.staticClass.trim();
-            }
+        for (var i in _modules) {
+          var module = _modules[i];
 
-            if (role) {
-              data.attrs['data-role'] = role;
+          if (module && typeof module === 'string') {
+            var classExpressions = module.split(/\s+/g);
+
+            for (var _i in classExpressions) {
+              var classExpression = classExpressions[_i];
+
+              var _parseClassExpression = parseClassExpression(classExpression),
+                  className = _parseClassExpression.className,
+                  binding = _parseClassExpression.binding,
+                  bindingValue = _parseClassExpression.bindingValue,
+                  role = _parseClassExpression.role;
+
+              if (bindingValue) {
+                className = context[binding];
+                binding = undefined;
+              }
+
+              if ((binding ? context[binding] : true) && styles[className]) {
+                data.staticClass += " " + styles[className];
+                data.staticClass = data.staticClass.trim();
+              }
+
+              if (role) {
+                data.attrs['data-role'] = role;
+              }
             }
-          });
-        });
+          }
+        }
       } // remove styleName attr
 
 

@@ -12,3 +12,11 @@
 .mini {
   font-size: 12px;
 }
+
+.primary {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
