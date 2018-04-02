@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v0.2.1
+ * vue-css-modules v0.3.1
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
@@ -72,20 +72,21 @@ var INJECTED = '__CSSModules__';
 var INJECT_ATTR = 'styleName';
 
 function createElement(_) {
-  var _this = this;
-
   var args = [].slice.call(arguments, 1); // for functional component
 
   if (isFunction(_)) {
     return createElement.bind(_, {
       createElement: _,
-      styles: args[0]
+      styles: args[0],
+      context: args[1]
     });
   }
 
   var h = _.createElement,
+      _$context = _.context,
+      context = _$context === void 0 ? {} : _$context,
       _$styles = _.styles,
-      styles = _$styles === void 0 ? this && this.$style || {} : _$styles;
+      styles = _$styles === void 0 ? context.$style || {} : _$styles;
   var data = args[1];
 
   if (isObject(data)) {
@@ -108,7 +109,7 @@ function createElement(_) {
               binding = _parseClassExpression.binding,
               role = _parseClassExpression.role;
 
-          if ((binding ? _this[binding] : true) && styles[className]) {
+          if ((binding ? context[binding] : true) && styles[className]) {
             data.staticClass += " " + styles[className];
             data.staticClass = data.staticClass.trim();
           }
@@ -125,7 +126,7 @@ function createElement(_) {
     delete data.attrs[INJECT_ATTR];
   }
 
-  return h.apply(this, args);
+  return h.apply(null, args);
 }
 
 var index = (function (styles) {
@@ -135,10 +136,12 @@ var index = (function (styles) {
       this[INJECTED] = true;
       this.$createElement = createElement.bind(this, {
         createElement: this.$createElement,
+        context: this,
         styles: styles
       });
       this._c = createElement.bind(this, {
         createElement: this._c,
+        context: this,
         styles: styles
       });
     }
