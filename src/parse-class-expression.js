@@ -1,37 +1,37 @@
-import { includes } from './utils'
+import { includes, camelCase } from './utils'
 
 const cache = Object.create(null)
 
 export default expression => {
   if (cache[expression]) return cache[expression]
 
-  let modifier
   let className
   let binding
+  let bindingValue
   let role
 
   if (includes(expression, '=', 1)) { // eg: disabled=isDisabled
-    modifier = '=';
     [className, binding] = expression.split('=')
   } else {
-    const _modifier = expression[0]
-    if (_modifier === '@') { // eg: @button
-      modifier = _modifier
+    const modifier = expression[0]
+    if (modifier === '$') { // eg: $type
+      binding = expression.substr(1)
+      bindingValue = true
+    } else if (modifier === '@') { // eg: @button
       className = expression.substr(1)
       role = className
-    } else if (_modifier === ':') { // eg: :disabled
-      modifier = _modifier
+    } else if (modifier === ':') { // eg: :disabled
       className = expression.substr(1)
-      binding = className
+      binding = camelCase(className)
     } else {
       className = expression
     }
   }
 
   cache[expression] = {
-    modifier,
     className,
     binding,
+    bindingValue,
     role
   }
 
