@@ -9,13 +9,15 @@ export default function createElement(_) {
   if (isFunction(_)) {
     return createElement.bind(_, {
       createElement: _,
-      styles: args[0]
+      styles: args[0],
+      context: args[1]
     })
   }
 
   const {
     createElement: h,
-    styles = (this && this.$style) || {}
+    context = {},
+    styles = context.$style || {}
   } = _
 
   const data = args[1]
@@ -43,7 +45,7 @@ export default function createElement(_) {
                 role
               } = parseClassExpression(classExpression)
 
-              if ((binding ? this[binding] : true) && styles[className]) {
+              if ((binding ? context[binding] : true) && styles[className]) {
                 data.staticClass += ` ${styles[className]}`
                 data.staticClass = data.staticClass.trim()
               }
@@ -62,5 +64,5 @@ export default function createElement(_) {
     delete data.attrs[INJECT_ATTR]
   }
 
-  return h.apply(this, args)
+  return h.apply(null, args)
 }
