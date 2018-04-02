@@ -16,7 +16,7 @@
     "lib"
   ],
   "scripts": {
-    "prepublish": "yarn run build",
+    "prepublishOnly": "yarn run build",
     "build": "bundler transform && bundler build",
     "lint": "eslint src",
     "demo": "poi demo/index.js"
