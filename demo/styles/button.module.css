@@ -1,0 +1,14 @@
+.button {
+  display: inline-block;
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid green;
+}
+
+.disabled {
+  opacity: .5;
+}
+
+.mini {
+  font-size: 12px;
+}
