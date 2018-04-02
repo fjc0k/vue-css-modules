@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v0.0.1
+ * vue-css-modules v0.2.1
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
@@ -30,12 +30,12 @@
   }
 
   var cache = Object.create(null);
-  var modifiers = ['@', ':'];
   var parseClassExpression = (function (expression) {
     if (cache[expression]) return cache[expression];
     var modifier;
     var className;
     var binding;
+    var role;
 
     if (includes(expression, '=', 1)) {
       // eg: disabled=isDisabled
@@ -45,20 +45,29 @@
 
       className = _expression$split[0];
       binding = _expression$split[1];
-    } else if (includes(modifiers, expression[0])) {
-      // eg: @button :disabled
-      modifier = expression[0];
-      className = expression.substr(1);
     } else {
-      // eg: icon
-      className = expression;
+      var _modifier = expression[0];
+
+      if (_modifier === '@') {
+        // eg: @button
+        modifier = _modifier;
+        className = expression.substr(1);
+        role = className;
+      } else if (_modifier === ':') {
+        // eg: :disabled
+        modifier = _modifier;
+        className = expression.substr(1);
+        binding = className;
+      } else {
+        className = expression;
+      }
     }
 
     cache[expression] = {
       modifier: modifier,
       className: className,
       binding: binding,
-      role: modifier === '@' && className
+      role: role
     };
     return cache[expression];
   });
@@ -105,7 +114,7 @@
 
             if ((binding ? _this[binding] : true) && styles[className]) {
               data.staticClass += " " + styles[className];
-              data.staticClass.trim();
+              data.staticClass = data.staticClass.trim();
             }
 
             if (role) {
@@ -113,7 +122,11 @@
             }
           });
         });
-      }
+      } // remove styleName attr
+
+
+      delete data[INJECT_ATTR];
+      delete data.attrs[INJECT_ATTR];
     }
 
     return h.apply(this, args);
@@ -126,6 +139,10 @@
         this[INJECTED] = true;
         this.$createElement = createElement.bind(this, {
           createElement: this.$createElement,
+          styles: styles
+        });
+        this._c = createElement.bind(this, {
+          createElement: this._c,
           styles: styles
         });
       }

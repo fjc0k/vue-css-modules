@@ -1,6 +1,6 @@
 {
   "name": "vue-css-modules",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Seamless mapping of class names to CSS modules inside of Vue components.",
   "repository": {
     "type": "git",
@@ -16,8 +16,10 @@
     "lib"
   ],
   "scripts": {
+    "prepublish": "yarn run build",
     "build": "bundler transform && bundler build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "demo": "poi demo/index.js"
   },
   "firb": {
     "entry": {
@@ -27,6 +29,9 @@
       ]
     },
     "format": "es,cjs,umd,umd-min"
+  },
+  "poi": {
+    "cssModules": true
   },
   "eslintConfig": {
     "root": true,
@@ -39,7 +44,8 @@
   "devDependencies": {
     "@fir-ui/bundler": "^0.3.0",
     "@fir-ui/eslint-config-fir": "^0.2.0",
-    "eslint": "^4.19.1"
+    "eslint": "^4.19.1",
+    "poi": "^9.6.13"
   },
   "keywords": [
     "vue",
