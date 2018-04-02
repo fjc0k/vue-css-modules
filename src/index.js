@@ -12,6 +12,10 @@ export default styles => {
         createElement: this.$createElement,
         styles
       })
+      this._c = createElement.bind(this, {
+        createElement: this._c,
+        styles
+      })
     }
   }
 }

@@ -45,7 +45,7 @@ export default function createElement(_) {
 
               if ((binding ? this[binding] : true) && styles[className]) {
                 data.staticClass += ` ${styles[className]}`
-                data.staticClass.trim()
+                data.staticClass = data.staticClass.trim()
               }
 
               if (role) {
@@ -56,6 +56,11 @@ export default function createElement(_) {
         }
       )
     }
+
+    // remove styleName attr
+    delete data[INJECT_ATTR]
+    delete data.attrs[INJECT_ATTR]
   }
+
   return h.apply(this, args)
 }
