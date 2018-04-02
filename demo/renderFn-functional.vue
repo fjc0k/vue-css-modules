@@ -15,15 +15,10 @@ export default {
   functional: true,
 
   render(h, { parent }) {
-    h = createElement(h, styles)
-
-    const styleName = [
-      '@button',
-      ctx.props.disabled && 'disabled mini'
-    ]
+    h = createElement(h, styles, ctx.props)
 
     return h('div', {
-      styleName,
+      styleName: '@button :disabled mini=disabled',
       on: {
         click: () => {
           // simulate parent to change props
