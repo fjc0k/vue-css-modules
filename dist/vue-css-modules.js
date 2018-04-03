@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v0.5.1
+ * vue-css-modules v0.5.2
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
@@ -154,7 +154,7 @@
               }
 
               if (role) {
-                data.attrs["data-component-" + role] = 'true';
+                data.attrs["data-component-" + role] = '';
               }
             }
           }
