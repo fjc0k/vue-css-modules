@@ -60,7 +60,7 @@ export default function createElement(_) {
             }
 
             if (role) {
-              data.attrs['data-role'] = role
+              data.attrs[`data-component-${role}`] = 'true'
             }
           }
         }
