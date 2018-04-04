@@ -14,20 +14,46 @@ In the template of Vue, CSS Modules look like this:
 
 ```html
 <template>
-  <div :class="$style.button">
+  <div :class="[
+    $style.button,
+    $style[type],
+    {
+      [$style.loading]: loading,
+      [$style.disabled]: isDisabled
+    }
+  ]">
     <div :class="$style.icon">⭐</div>
     <div :class="$style.text">OK</div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'my-button',
+  props: {
+    type: {
+      type: String,
+      default: 'primary'
+    },
+    loading: Boolean,
+    disabled: Boolean
+  },
+  computed: {
+    isDisabled() {
+      return this.disabled || this.loading
+    }
+  }
+}
+</script>
 
 <style module>
   /* CSS here */
 </style>
 ```
 
-Rendering the component will produce a markup similar to:
+Rendering the `<my-button />` will produce a markup similar to:
 ```html
-<div class="button__button--34id2">
+<div class="button__button--34id2 button__primary--fi3pd">
   <div class="button__icon--eep9s">⭐</div>
   <div class="button__text--d26bd">OK</div>
 </div>
@@ -55,65 +81,19 @@ In Vue template:
 
 ```html
 <template>
-  <div styleName="button">
+  <div styleName="button $type :loading disabled=isDisabled">
     <div styleName="icon">⭐</div>
     <div styleName="text">OK</div>
   </div>
 </template>
-
-<script>
-import CSSModules from 'vue-css-modules'
-import styles from '../styles/button.css'
-
-export default {
-  name: 'button',
-  mixins: [
-    CSSModules(styles)
-  ]
-}
-</script>
 ```
 
-In Vue JSX:
+Using `vue-css-modules`:
 
-```js
-import CSSModules from 'vue-css-modules'
-import styles from '../styles/button.css'
-
-export default {
-  name: 'button',
-  mixins: [
-    CSSModules(styles)
-  ],
-  render() {
-    return (
-      <div styleName="button">
-        <div styleName="icon">⭐</div>
-        <div styleName="text">OK</div>
-      </div>
-    )
-  }
-}
-```
-
-In Vue render functions:
-
-```js
-import CSSModules from 'vue-css-modules'
-import styles from '../styles/button.css'
-
-export default {
-  name: 'button',
-  mixins: [
-    CSSModules(styles)
-  ],
-  render(h) {
-    return h('div', { styleName: 'button' }, [
-      h('div', { styleName: 'icon' }, '⭐'),
-      h('div', { styleName: 'text' }, 'OK')
-    ])
-  }
-}
+- You do not need to refer to the `$style` object every time you use a CSS Module.
+- There is clear distinction between global CSS and CSS Modules, e.g.
+```html
+<div class="global-css" styleName="local-module"></div>
 ```
 
 ## The Implementation
