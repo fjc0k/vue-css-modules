@@ -4,7 +4,7 @@
 
 ## CSS Modules：局部作用域 & 模块化
 
-`CSS Modules` 为每一个局部类名产生全局唯一的类名，这样组件样式间就不会相互影响了。如：
+`CSS Modules` 为每一个局部类赋予全局唯一的类名，这样组件样式间就不会相互影响了。如：
 
 ```css
 /* button.css */
@@ -40,7 +40,7 @@ import styles from './button.css'
 element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" />'
 ```
 
-## Vue CSS Modules：简化类名映射
+## `vue-css-modules`：简化类名映射
 
 下面是一个使用了 CSS Modules 的按钮组件：
 
@@ -101,7 +101,7 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 
 ## 修饰符
 
-### **@** button
+### @button
 
 ```html
 <button styleName="@button">按钮</button>
@@ -121,7 +121,7 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 }
 ```
 
-### **$** type
+### $type
 
 ```html
 <button styleName="$type">按钮</button>
@@ -130,10 +130,10 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 这等同于：
 
 ```html
-<button :styleName="this.type">按钮</button>
+<button :styleName="type">按钮</button>
 ```
 
-### **:** mini
+### :mini
 
 ```html
 <button styleName=":mini">按钮</button>
@@ -142,10 +142,10 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 这等同于：
 
 ```html
-<button :styleName="this.mini ? 'mini' : ''">按钮</button>
+<button :styleName="mini ? 'mini' : ''">按钮</button>
 ```
 
-### disabled **=** isDisabled
+### disabled=isDisabled
 
 ```html
 <button styleName="disabled=isDisabled">按钮</button>
@@ -154,12 +154,14 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 这等同于：
 
 ```html
-<button :styleName="this.isDisabled ? 'disabled' : ''">按钮</button>
+<button :styleName="isDisabled ? 'disabled' : ''">按钮</button>
 ```
 
-## 在 Vue 模板中使用
+## 使用方法
 
-### 引入模板外部的 CSS 模块
+### 在 Vue 模板中使用
+
+#### 引入模板外部的 CSS 模块
 
 ```html
 <template>
@@ -181,7 +183,7 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 </script>
 ```
 
-### 使用模板内部的 CSS 模块
+#### 使用模板内部的 CSS 模块
 
 ```html
 <template>
@@ -211,7 +213,7 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 </style>
 ```
 
-## 在 Vue JSX 中使用
+### 在 Vue JSX 中使用
 
 ```javascript
 import CSSModules from 'vue-css-modules'
@@ -228,7 +230,7 @@ export default {
 }
 ```
 
-## 在 Vue 渲染函数中使用
+### 在 Vue 渲染函数中使用
 
 ```javascript
 import CSSModules from 'vue-css-modules'
@@ -244,3 +246,7 @@ export default {
   }
 }
 ```
+
+## 实现原理
+
+`vue-css-modules` 注册了 [`beforeCreate`](https://cn.vuejs.org/v2/api/#beforeCreate) 钩子，在钩子中劫持了组件的渲染函数。对于传给渲染函数的参数，将会解析其 `data` 或 `data.attrs` 中的 `styleName` 属性生成全局类名字符串，并将它附着在 `data.staticClass` 值的后面。
