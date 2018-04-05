@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v0.5.2
+ * vue-css-modules v1.0.0
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
