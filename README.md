@@ -4,7 +4,7 @@
 
 ## CSS Modules: local scope & modular
 
-`CSS Modules` assigns a local class a global unique name, so a component styles will not affect other components. e.g.
+[`CSS Modules`](https://github.com/css-modules/css-modules) assigns a local class a global unique name, so a component styles will not affect other components. e.g.
 
 ```css
 /* button.css */
@@ -224,7 +224,7 @@ export default {
   props: { mini: Boolean },
   render() {
     return (
-      <button styleName="@button :mini">按钮</button>
+      <button styleName="@button :mini">Click me</button>
     )
   }
 }
@@ -242,7 +242,7 @@ export default {
   render(h) {
     return h('button', {
       styleName: '@button :mini'
-    }, '按钮')
+    }, 'Click me')
   }
 }
 ```

@@ -4,7 +4,7 @@
 
 ## CSS Modules：局部作用域 & 模块化
 
-`CSS Modules` 为每一个局部类赋予全局唯一的类名，这样组件样式间就不会相互影响了。如：
+[`CSS Modules`](https://github.com/css-modules/css-modules) 为每一个局部类赋予全局唯一的类名，这样组件样式间就不会相互影响了。如：
 
 ```css
 /* button.css */
@@ -224,7 +224,7 @@ export default {
   props: { mini: Boolean },
   render() {
     return (
-      <button styleName="@button :mini">按钮</button>
+      <button styleName="@button :mini">点我</button>
     )
   }
 }
@@ -242,7 +242,7 @@ export default {
   render(h) {
     return h('button', {
       styleName: '@button :mini'
-    }, '按钮')
+    }, '点我')
   }
 }
 ```
