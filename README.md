@@ -51,7 +51,7 @@ export default {
 </style>
 ```
 
-Rendering the `<my-button />` will produce a markup similar to:
+Rendering `<my-button />` will produce a markup similar to:
 ```html
 <div class="button__button--34id2 button__primary--fi3pd">
   <div class="button__icon--eep9s">⭐</div>
@@ -98,4 +98,4 @@ Using `vue-css-modules`:
 
 ## The Implementation
 
-`vue-css-modules` extends `$createElement` method of the current component. It will use the value of `styleName` in `data` or `data.attrs` to look for CSS Modules in the associated styles object and will append the matching unique CSS class names to the `data.staticClass` property value.
+`vue-css-modules` extends `$createElement` method of the current component. It will use the value of `styleName` in `data` or `data.attrs` to look for CSS Modules in the associated styles object and will append the matching unique CSS class names to the `data.staticClass` value.
