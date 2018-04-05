@@ -2,9 +2,7 @@
 
 <img src="./assets/logo.png" width="150" height="150" />
 
-## 目的为何？
-
-### CSS Modules：局部作用域 & 模块化
+## CSS Modules：局部作用域 & 模块化
 
 `CSS Modules` 为每一个局部类名产生全局唯一的类名，这样组件样式间就不会相互影响了。如：
 
@@ -42,7 +40,7 @@ import styles from './button.css'
 element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" />'
 ```
 
-### vue-css-modules：简化类名映射
+## Vue CSS Modules：简化类名映射
 
 下面是一个使用了 CSS Modules 的按钮组件：
 
@@ -70,6 +68,7 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 - 你必须在 `data` 中传入 `styles`
 - 你必须使用 `styles.localClassName` 导入全局类名
 - 如果有其他全局类名，你必须将它们放在一起
+- 如果要和组件的属性值绑定，就算局部类名和属性名一样，也要显式指定
 
 对于上面的按钮组件，使用 `vue-css-modules` 后：
 
@@ -91,4 +90,61 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
     props: { mini: Boolean }
   }
 </script>
+```
+
+现在：
+
+- 你不必在 `data` 中传入 `styles`，但得在 `mixins` 中传入 `styles` 🌝
+- 你可以跟 `styles.localClassName` 说拜拜了
+- 将局部类名放在 `styleName` 属性，全局类名放在 `class` 属性，规整了许多
+- 局部类名绑定组件同名属性，只需在其前面加上 `:` 修饰符
+
+## 修饰符
+
+### **@** button
+
+```html
+<button styleName="@button">按钮</button>
+```
+
+这等同于：
+
+```html
+<button styleName="button" data-component-button="true">按钮</button>
+```
+
+### **$** type
+
+```html
+<button styleName="$type">按钮</button>
+```
+
+这等同于：
+
+```html
+<button :styleName="this.type">按钮</button>
+```
+
+### **:** mini
+
+```html
+<button styleName=":mini">按钮</button>
+```
+
+这等同于：
+
+```html
+<button :styleName="this.mini ? 'mini' : ''">按钮</button>
+```
+
+### disabled **=** isDisabled
+
+```html
+<button styleName="disabled=isDisabled">按钮</button>
+```
+
+这等同于：
+
+```html
+<button :styleName="this.isDisabled ? 'disabled' : ''">按钮</button>
 ```
