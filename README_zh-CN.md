@@ -113,6 +113,14 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 <button styleName="button" data-component-button="true">按钮</button>
 ```
 
+这让你能在外部重置组件的样式：
+
+```css
+.form [data-component-button] {
+  font-size: 20px;
+}
+```
+
 ### **$** type
 
 ```html
@@ -147,4 +155,92 @@ element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" /
 
 ```html
 <button :styleName="this.isDisabled ? 'disabled' : ''">按钮</button>
+```
+
+## 在 Vue 模板中使用
+
+### 引入模板外部的 CSS 模块
+
+```html
+<template>
+  <button
+    class="global-button-class-name"
+    styleName="button :mini">
+    点我
+  </button>
+</template>
+
+<script>
+  import CSSModules from 'vue-css-modules'
+  import styles from './button.css'
+
+  export default {
+    mixins: [CSSModules(styles)],
+    props: { mini: Boolean }
+  }
+</script>
+```
+
+### 使用模板内部的 CSS 模块
+
+```html
+<template>
+  <button
+    class="global-button-class-name"
+    styleName="button :mini">
+    点我
+  </button>
+</template>
+
+<script>
+  import CSSModules from 'vue-css-modules'
+
+  export default {
+    mixins: [CSSModules()],
+    props: { mini: Boolean }
+  }
+</script>
+
+<style module>
+  .button {
+    font-size: 16px;
+  }
+  .mini {
+    font-size: 12px;
+  }
+</style>
+```
+
+## 在 Vue JSX 中使用
+
+```javascript
+import CSSModules from 'vue-css-modules'
+import styles from './button.css'
+
+export default {
+  mixins: [CSSModules(styles)],
+  props: { mini: Boolean },
+  render() {
+    return (
+      <button styleName="@button :mini">按钮</button>
+    )
+  }
+}
+```
+
+## 在 Vue 渲染函数中使用
+
+```javascript
+import CSSModules from 'vue-css-modules'
+import styles from './button.css'
+
+export default {
+  mixins: [CSSModules(styles)],
+  props: { mini: Boolean },
+  render(h) {
+    return h('button', {
+      styleName: '@button :mini'
+    }, '按钮')
+  }
+}
 ```
