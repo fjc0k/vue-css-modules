@@ -1,3 +1,5 @@
+🇨🇳中文 | [English](./README.md)
+
 # Vue CSS Modules
 
 <img src="./assets/logo.png" width="150" height="150" />
