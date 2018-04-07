@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v1.0.0
+ * vue-css-modules v1.0.1
  * (c) 2018-present fjc0k <fjc0kb@gmail.com>
  * Released under the MIT License.
  */
@@ -149,7 +149,7 @@
               }
 
               if ((binding ? context[binding] : true) && styles[className]) {
-                data.staticClass += " " + styles[className];
+                data.staticClass = styles[className] + " " + data.staticClass;
                 data.staticClass = data.staticClass.trim();
               }
 
