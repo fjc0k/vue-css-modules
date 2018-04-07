@@ -55,7 +55,7 @@ export default function createElement(_) {
             }
 
             if ((binding ? context[binding] : true) && styles[className]) {
-              data.staticClass += ` ${styles[className]}`
+              data.staticClass = `${styles[className]} ${data.staticClass}`
               data.staticClass = data.staticClass.trim()
             }
 
