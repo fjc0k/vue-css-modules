@@ -251,4 +251,4 @@ export default {
 
 ## The implementation
 
-`vue-css-modules` extends `$createElement` method of the current component. It will use the value of `styleName` in `data` or `data.attrs` to look for CSS Modules in the associated styles object and will prepend the matching unique CSS class names to the `data.staticClass` value.
+`vue-css-modules` extends `$createElement` method of the current component. It will use the value of `styleName` in `data` or `data.attrs` to look for CSS Modules in the associated styles object and will append the matching unique CSS class names to the `data.staticClass` value.

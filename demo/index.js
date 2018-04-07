@@ -25,7 +25,9 @@ new Vue({
       h('div', [
         h('div', 'Click button'),
         h('hr'),
-        h(this.currentDemo),
+        h(this.currentDemo, {
+          class: 'custom'
+        }),
         h('hr'),
         Object.keys(demos).map(demo => (
           h('button', {

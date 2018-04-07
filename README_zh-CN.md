@@ -251,4 +251,4 @@ export default {
 
 ## 实现原理
 
-`vue-css-modules` 注册了 [`beforeCreate`](https://cn.vuejs.org/v2/api/#beforeCreate) 钩子，在钩子中劫持了组件的渲染函数。对于传给渲染函数的参数，将会解析其 `data` 或 `data.attrs` 中的 `styleName` 属性生成全局类名字符串，并将它附着在 `data.staticClass` 值的前面。
+`vue-css-modules` 注册了 [`beforeCreate`](https://cn.vuejs.org/v2/api/#beforeCreate) 钩子，在钩子中劫持了组件的渲染函数。对于传给渲染函数的参数，将会解析其 `data` 或 `data.attrs` 中的 `styleName` 属性生成全局类名字符串，并将它附着在 `data.staticClass` 值的后面。
