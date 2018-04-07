@@ -1,6 +1,6 @@
 {
   "name": "vue-css-modules",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Seamless mapping of class names to CSS modules inside of Vue components.",
   "repository": {
     "type": "git",
