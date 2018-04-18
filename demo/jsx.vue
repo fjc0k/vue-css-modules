@@ -1,17 +1,9 @@
-<template>
-  <div
-    styleName="@button :disabled mini=isMini"
-    @click="disabled=!disabled">
-    BUTTON
-  </div>
-</template>
-
 <script>
 import CSSModules from '../src'
 import styles from './styles/button.module.css'
 
 export default {
-  name: 'demo-button-5',
+  name: 'demo-button-1',
 
   mixins: [
     CSSModules(styles)
@@ -27,6 +19,16 @@ export default {
     isMini() {
       return this.disabled
     }
+  },
+
+  render(h) {
+    return (
+      <div
+        styleName="@button :disabled mini=isMini"
+        onClick={() => this.disabled = !this.disabled}>
+        BUTTON
+      </div>
+    )
   }
 }
 </script>
