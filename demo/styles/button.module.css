@@ -7,6 +7,7 @@
 
 .disabled {
   opacity: .5;
+  color: black;
 }
 
 .mini {
