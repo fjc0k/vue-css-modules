@@ -1,6 +1,6 @@
 {
   "name": "vue-css-modules",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Seamless mapping of class names to CSS modules inside of Vue components.",
   "license": "MIT",
   "main": "lib/index.js",
