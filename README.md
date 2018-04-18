@@ -1,0 +1,270 @@
+English | [🇨🇳中文](./README_zh-CN.md)
+
+# Vue CSS Modules
+
+[![npm](https://img.shields.io/npm/v/vue-css-modules.svg?style=for-the-badge)](https://npm.im/vue-css-modules)
+[![npm downloads](https://img.shields.io/npm/dt/vue-css-modules.svg?style=for-the-badge)](https://npm.im/vue-css-modules)
+[![Travis](https://img.shields.io/travis/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://travis-ci.org/fjc0k/vue-css-modules)
+[![Codecov](https://img.shields.io/codecov/c/github/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://codecov.io/gh/fjc0k/vue-css-modules)
+[![minified size](https://img.shields.io/badge/minified%20size-1.87%20KB-blue.svg?MIN&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![minzipped size](https://img.shields.io/badge/minzipped%20size-969%20B-blue.svg?MZIP&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![license](https://img.shields.io/github/license/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/LICENSE)
+
+Seamless mapping of class names to CSS modules inside of Vue components.
+
+```shell
+yarn add vue-css-modules
+```
+
+CDN: [jsDelivr](//www.jsdelivr.com/package/npm/vue-css-modules) | [UNPKG](//unpkg.com/vue-css-modules/) (Avaliable as `window.VueCSSModules`)
+
+<img src="./assets/logo.png" width="150" height="150" />
+
+## CSS Modules: local scope & modular
+
+[`CSS Modules`](https://github.com/css-modules/css-modules) assigns a local class a global unique name, so a component styles will not affect other components. e.g.
+
+```css
+/* button.css */
+.button {
+  font-size: 16px;
+}
+.mini {
+  font-size: 12px;
+}
+```
+
+It's will transformed to something similar to:
+
+```css
+/* button.css */
+.button__button--d8fj3 {
+  font-size: 16px;
+}
+.button__mini--f90jc {
+  font-size: 12px;
+}
+```
+
+When importing the CSS Module from a JS Module, it exports an object with all mappings from local names to global names. Just like this:
+
+```javascript
+import styles from './button.css'
+// styles = {
+//   button: 'button__button--d8fj3',
+//   mini: 'button__mini--f90jc'
+// }
+
+element.innerHTML = '<button class="' + styles.button + ' ' + styles.mini + '" />'
+```
+
+## `vue-css-modules`: simplify mapping name
+
+Here's a button component with CSS Modules:
+
+```html
+<template>
+  <button :class="{
+    'global-button-class-name': true,
+    [styles.button]: true,
+    [styles.mini]: mini
+  }">Click me</button>
+</template>
+
+<script>
+  import styles from './button.css'
+
+  export default {
+    props: { mini: Boolean },
+    data: () => ({ styles })
+  }
+</script>
+```
+
+Surely, CSS Modules is a good choice for Vue components. But here are a few disadvantages:
+
+- You have to pass `styles` object into `data` function.
+- You have to use `styles.localClassName` importing a global class name.
+- If there are other global class names, you have to put them together.
+- If you want to bind a class name to a component property value, you have to explicitly specify the property name, even if the class name is equals the property name.
+
+Now, you can use `vue-css-modules` to remake it:
+
+```html
+<template>
+  <button
+    class="global-button-class-name"
+    styleName="button :mini">
+    Click me
+  </button>
+</template>
+
+<script>
+  import CSSModules from 'vue-css-modules'
+  import styles from './button.css'
+
+  export default {
+    mixins: [CSSModules(styles)],
+    props: { mini: Boolean }
+  }
+</script>
+```
+
+Using `vue-css-modules`:
+
+- You don't need pass `styles` object into `data` function, but the `CSSModules` mixin. 🌝
+- You can completely say byebye to `styles.localClassName`.
+- There is clear distinction between global CSS and CSS Modules.
+- You can use the `:` modifier to bind the property with the same name.
+
+## Modifiers
+
+### @button
+
+```html
+<button styleName="@button">Button</button>
+```
+
+This is the equivalent to:
+
+```html
+<button styleName="button" data-component-button="true">Button</button>
+```
+
+This allows you to override component styles in context:
+
+```css
+.form [data-component-button] {
+  font-size: 20px;
+}
+```
+
+### $type
+
+```html
+<button styleName="$type">Button</button>
+```
+
+This is the equivalent to:
+
+```html
+<button :styleName="type">Button</button>
+```
+
+### :mini
+
+```html
+<button styleName=":mini">Button</button>
+```
+
+This is the equivalent to:
+
+```html
+<button :styleName="mini ? 'mini' : ''">Button</button>
+```
+
+### disabled=isDisabled
+
+```html
+<button styleName="disabled=isDisabled">Button</button>
+```
+
+This is the equivalent to:
+
+```html
+<button :styleName="isDisabled ? 'disabled' : ''">Button</button>
+```
+
+## Usage
+
+### In templates
+
+#### CSS Modules outside the template
+
+```html
+<template>
+  <button
+    class="global-button-class-name"
+    styleName="button :mini">
+    Click me
+  </button>
+</template>
+
+<script>
+  import CSSModules from 'vue-css-modules'
+  import styles from './button.css'
+
+  export default {
+    mixins: [CSSModules(styles)],
+    props: { mini: Boolean }
+  }
+</script>
+```
+
+#### CSS Modules inside the template
+
+```html
+<template>
+  <button
+    class="global-button-class-name"
+    styleName="button :mini">
+    Click me
+  </button>
+</template>
+
+<script>
+  import CSSModules from 'vue-css-modules'
+
+  export default {
+    mixins: [CSSModules()],
+    props: { mini: Boolean }
+  }
+</script>
+
+<style module>
+  .button {
+    font-size: 16px;
+  }
+  .mini {
+    font-size: 12px;
+  }
+</style>
+```
+
+### In JSX
+
+```javascript
+import CSSModules from 'vue-css-modules'
+import styles from './button.css'
+
+export default {
+  mixins: [CSSModules(styles)],
+  props: { mini: Boolean },
+  render() {
+    return (
+      <button styleName="@button :mini">Click me</button>
+    )
+  }
+}
+```
+
+### In render functions
+
+```javascript
+import CSSModules from 'vue-css-modules'
+import styles from './button.css'
+
+export default {
+  mixins: [CSSModules(styles)],
+  props: { mini: Boolean },
+  render(h) {
+    return h('button', {
+      styleName: '@button :mini'
+    }, 'Click me')
+  }
+}
+```
+
+## The implementation
+
+`vue-css-modules` extends `$createElement` method of the current component. It will use the value of `styleName` in `data` or `data.attrs` to look for CSS Modules in the associated styles object and will append the matching unique CSS class names to the `data.staticClass` value.

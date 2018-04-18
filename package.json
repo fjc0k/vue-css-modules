@@ -1,0 +1,74 @@
+{
+  "name": "vue-css-modules",
+  "version": "1.0.2",
+  "description": "Seamless mapping of class names to CSS modules inside of Vue components.",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "unpkg": "dist/vue-css-modules.min.js",
+  "jsdelivr": "dist/vue-css-modules.min.js",
+  "homepage": "https://github.com/fjc0k/vue-css-modules",
+  "author": {
+    "name": "fjc0k",
+    "email": "fjc0kb@gmail.com",
+    "url": "https://github.com/fjc0k"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fjc0k/vue-css-modules.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fjc0k/vue-css-modules/issues"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "css",
+    "css-modules",
+    "postcss",
+    "sass",
+    "less",
+    "stylus"
+  ],
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "demo": "bdr dev demo/index.js --css.modules",
+    "test": "jest --coverage",
+    "build": "bdr transform & bdr build",
+    "release": "standard-version -a",
+    "postrelease": "git push --follow-tags origin master && npm publish"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "yarn build && git add dist README.md"
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "@fir-ui/fir"
+  },
+  "eslintIgnore": [
+    "dist",
+    "lib"
+  ],
+  "babel": {
+    "presets": [
+      [
+        "@bdr/bdr"
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.44",
+    "@fir-ui/eslint-config-fir": "^0.3.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^22.4.3",
+    "bdr": "^1.3.4",
+    "codecov": "^3.0.0",
+    "eslint": "^4.19.1",
+    "jest": "^22.4.3",
+    "standard-version": "^4.3.0"
+  }
+}
