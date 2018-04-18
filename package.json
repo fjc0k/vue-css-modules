@@ -42,7 +42,7 @@
   },
   "standard-version": {
     "scripts": {
-      "postbump": "yarn build && git add dist README.md"
+      "postbump": "yarn build && git add -A"
     }
   },
   "eslintConfig": {

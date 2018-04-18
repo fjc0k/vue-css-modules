@@ -7,7 +7,7 @@
 [![Travis](https://img.shields.io/travis/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://travis-ci.org/fjc0k/vue-css-modules)
 [![Codecov](https://img.shields.io/codecov/c/github/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://codecov.io/gh/fjc0k/vue-css-modules)
 [![minified size](https://img.shields.io/badge/minified%20size-1.87%20KB-blue.svg?MIN&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
-[![minzipped size](https://img.shields.io/badge/minzipped%20size-969%20B-blue.svg?MZIP&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![minzipped size](https://img.shields.io/badge/minzipped%20size-970%20B-blue.svg?MZIP&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
 [![license](https://img.shields.io/github/license/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/LICENSE)
 
 顺滑地将 Vue 组件内的 CSS Modules 转换为全局类名。
