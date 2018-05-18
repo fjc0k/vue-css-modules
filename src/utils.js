@@ -15,6 +15,10 @@ export function isFunction(value) {
   return typeof value === 'function'
 }
 
+export function isString(value) {
+  return typeof value === 'string'
+}
+
 const camelCaseCache = Object.create(null)
 export function camelCase(value) {
   if (camelCaseCache[value]) return camelCaseCache[value]

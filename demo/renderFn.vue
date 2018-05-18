@@ -5,8 +5,14 @@ import styles from './styles/button.module.css'
 export default {
   name: 'demo-button-3',
 
+  inject: {
+    styles: {
+      default: () => styles
+    }
+  },
+
   mixins: [
-    CSSModules(styles)
+    CSSModules('styles')
   ],
 
   data() {

@@ -2,13 +2,9 @@ English | [🇨🇳中文](./README_zh-CN.md)
 
 # Vue CSS Modules
 
-[![npm](https://img.shields.io/npm/v/vue-css-modules.svg?style=for-the-badge)](https://npm.im/vue-css-modules)
-[![npm downloads](https://img.shields.io/npm/dt/vue-css-modules.svg?style=for-the-badge)](https://npm.im/vue-css-modules)
-[![Travis](https://img.shields.io/travis/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://travis-ci.org/fjc0k/vue-css-modules)
-[![Codecov](https://img.shields.io/codecov/c/github/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://codecov.io/gh/fjc0k/vue-css-modules)
-[![minified size](https://img.shields.io/badge/minified%20size-1.87%20KB-blue.svg?MIN&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
-[![minzipped size](https://img.shields.io/badge/minzipped%20size-970%20B-blue.svg?MZIP&style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
-[![license](https://img.shields.io/github/license/fjc0k/vue-css-modules.svg?style=for-the-badge)](https://github.com/fjc0k/vue-css-modules/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/fjc0k/vue-css-modules.svg)](https://travis-ci.org/fjc0k/vue-css-modules)
+[![minified size](https://img.shields.io/badge/minified%20size-1.87%20KB-blue.svg?MIN)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![minzipped size](https://img.shields.io/badge/minzipped%20size-970%20B-blue.svg?MZIP)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
 
 Seamless mapping of class names to CSS modules inside of Vue components.
 

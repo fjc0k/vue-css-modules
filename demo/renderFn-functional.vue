@@ -12,10 +12,19 @@ const ctx = {
 export default {
   name: 'demo-button-2',
 
+  inject: {
+    styles: {
+      default: () => styles
+    }
+  },
+
   functional: true,
 
-  render(h, { parent }) {
-    h = createElement(h, styles, ctx.props)
+  render(h, { parent, injections }) {
+    h = createElement(h, 'styles', {
+      ...ctx,
+      injections
+    })
 
     return h('div', {
       styleName: '@button :disabled mini=disabled',

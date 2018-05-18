@@ -1,25 +1,38 @@
 /* eslint max-depth: 0 guard-for-in: 0 */
-import { isObject, isFunction } from './utils'
+import { isObject, isFunction, isString } from './utils'
 import parseClassExpression from './parse-class-expression'
 import { INJECT_ATTR } from './config'
 
+// eslint-disable-next-line
 export default function createElement(_) {
   const args = [].slice.call(arguments, 1)
 
   // for functional component
   if (isFunction(_)) {
     return createElement.bind(_, {
+      functional: true,
       createElement: _,
       styles: args[0],
       context: args[1]
     })
   }
 
-  const {
+  let {
+    functional = false,
     createElement: h,
     context = {},
     styles = context.$style || {}
   } = _
+
+  if (isString(styles)) {
+    styles = (
+      functional ? (context.injections || {})[styles] : context[styles]
+    ) || {}
+  }
+
+  if (functional) {
+    context = context.props || {}
+  }
 
   const data = args[1]
 
