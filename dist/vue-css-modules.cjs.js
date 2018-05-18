@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v1.0.5
+ * vue-css-modules v1.1.0
  * (c) 2018-present fjc0k <fjc0kb@gmail.com> (https://github.com/fjc0k)
  * Released under the MIT License.
  */
@@ -23,6 +23,9 @@ function isObject(value) {
 }
 function isFunction(value) {
   return typeof value === 'function';
+}
+function isString(value) {
+  return typeof value === 'string';
 }
 var camelCaseCache = Object.create(null);
 function camelCase(value) {
@@ -92,22 +95,35 @@ var INJECTED = '__CSSModules__';
 var INJECT_ATTR = 'styleName';
 
 /* eslint max-depth: 0 guard-for-in: 0 */
+
 function createElement(_) {
   var args = [].slice.call(arguments, 1); // for functional component
 
   if (isFunction(_)) {
     return createElement.bind(_, {
+      functional: true,
       createElement: _,
       styles: args[0],
       context: args[1]
     });
   }
 
-  var h = _.createElement,
+  var _$functional = _.functional,
+      functional = _$functional === void 0 ? false : _$functional,
+      h = _.createElement,
       _$context = _.context,
       context = _$context === void 0 ? {} : _$context,
       _$styles = _.styles,
       styles = _$styles === void 0 ? context.$style || {} : _$styles;
+
+  if (isString(styles)) {
+    styles = (functional ? (context.injections || {})[styles] : context[styles]) || {};
+  }
+
+  if (functional) {
+    context = context.props || {};
+  }
+
   var data = args[1];
 
   if (isObject(data)) {

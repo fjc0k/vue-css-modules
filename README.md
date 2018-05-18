@@ -3,8 +3,8 @@ English | [🇨🇳中文](./README_zh-CN.md)
 # Vue CSS Modules
 
 [![Travis](https://img.shields.io/travis/fjc0k/vue-css-modules.svg)](https://travis-ci.org/fjc0k/vue-css-modules)
-[![minified size](https://img.shields.io/badge/minified%20size-1.87%20KB-blue.svg?MIN)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
-[![minzipped size](https://img.shields.io/badge/minzipped%20size-970%20B-blue.svg?MZIP)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![minified size](https://img.shields.io/badge/minified%20size-2.02%20KB-blue.svg?MIN)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
+[![minzipped size](https://img.shields.io/badge/minzipped%20size-1.02%20KB-blue.svg?MZIP)](https://github.com/fjc0k/vue-css-modules/blob/master/dist/vue-css-modules.min.js)
 
 Seamless mapping of class names to CSS modules inside of Vue components.
 
