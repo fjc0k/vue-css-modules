@@ -1,14 +1,19 @@
 import Vue from 'vue'
+import CSSModules from '../src'
 
 import renderFn from './renderFn'
 import renderFnFunctional from './renderFn-functional'
 import templateWithOuterModules from './template-with-outer-modules'
 import templateWithInlineModules from './template-with-inline-modules'
+import templateWithInlineModulesGlobal from './template-with-inline-modules-global'
+
+Vue.use(CSSModules)
 
 const demos = {
   'renderFn-functional': renderFnFunctional,
   renderFn: renderFn,
   'template-with-inline-modules': templateWithInlineModules,
+  'template-with-inline-modules-global': templateWithInlineModulesGlobal,
   'template-with-outer-modules': templateWithOuterModules
 }
 
