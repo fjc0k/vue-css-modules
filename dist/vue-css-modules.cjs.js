@@ -1,5 +1,5 @@
 /*!
- * vue-css-modules v1.1.0
+ * vue-css-modules v1.2.0
  * (c) 2018-present fjc0k <fjc0kb@gmail.com> (https://github.com/fjc0k)
  * Released under the MIT License.
  */
@@ -91,7 +91,6 @@ var parseClassExpression = (function (expression) {
   return cache[expression];
 });
 
-var INJECTED = '__CSSModules__';
 var INJECT_ATTR = 'styleName';
 
 /* eslint max-depth: 0 guard-for-in: 0 */
@@ -181,23 +180,29 @@ function createElement(_) {
   return h.apply(null, args);
 }
 
-var index = (function (styles) {
+/* eslint camelcase: 0 */
+
+var CSSModules = function CSSModules(styles) {
   return {
     beforeCreate: function beforeCreate() {
-      if (this[INJECTED]) return;
-      this[INJECTED] = true;
+      this.original$createElement = this.original$createElement || this.$createElement;
+      this.original_c = this.original_c || this._c;
       this.$createElement = createElement.bind(this, {
-        createElement: this.$createElement,
+        createElement: this.original$createElement,
         context: this,
         styles: styles
       });
       this._c = createElement.bind(this, {
-        createElement: this._c,
+        createElement: this.original_c,
         context: this,
         styles: styles
       });
     }
   };
-});
+};
 
-module.exports = index;
+CSSModules.install = function (Vue) {
+  Vue.mixin(CSSModules());
+};
+
+module.exports = CSSModules;
